@@ -5,12 +5,25 @@ HTML_Content = requests.get("https://m.timesjobs.com/mobile/jobs-search-result.h
 
 soup = BeautifulSoup(HTML_Content,'lxml')
 
+JOBS = soup.find_all('div',class_='srp-listing')
+# print(JOBS)
+for job in JOBS:
+    
+    title_tag = job.find('div',class_='srp-job-heading')
+    title = title_tag.a.text.strip() if title_tag and title_tag.a else "N/A"
+     
+    
+    location = title_tag.h4.span.text.strip() if title_tag and title_tag.span else "N/A"
+    skills_tags = job.find_all('a',class_='srphglt')
+    
+    
+    skills = [s.text.strip() for s in skills_tags] if skills_tags else ["N/A"]
+    print(title)
+    print(location)
+    print("Skills:", ', '.join(skills))
+    print('')
 
-job = soup.find_all('span',class_='srp-comp-name')
-title = soup.select('h3 a')
-location = soup.find_all('div',class_='srp-loc')
 
-for j , t,l in zip(job,title,location):
-    print(f'Job title is {t.text} and company name is {j.text} and location is {l.text}')
+
 
 

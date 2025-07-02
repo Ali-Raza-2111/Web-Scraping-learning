@@ -1,48 +1,14 @@
-# from datetime import datetime
-# import requests
-# from selenium import webdriver
-# import time
-# from selenium.webdriver.chrome.service import Service
-# from selenium.webdriver.chrome.options import Options
-# from bs4 import BeautifulSoup
-# import csv
-
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
-
-
-# def extract_product_html(url):
-#     res = requests.get(url,headers={'User-Agent': USER_AGENT})
-#     return res.content
-
-
-
-        
-# def extract_price_info(soup):
-#     price = soup.find('span',class_='a-price aok-align-center reinventPricePriceToPayMargin priceToPay')
-#     print(price)
-
-# def extract_product_details(url):
-#     product_info = {}
-#     Product_html = extract_rendered_html(url)
-#     soup = BeautifulSoup(Product_html,'lxml')
-#     print(soup.prettify())
-
-    
-# if __name__ == "__main__":
-#     with open('Amazon_product_Urls.csv',newline='') as csvfile:
-#         reader = csv.reader(csvfile,delimiter=',')
-#         for row in reader:
-#             url = row[0]
-#             extract_product_details(url)
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 def extract_rendered_html(url):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -115,7 +81,37 @@ def extract_product_title_selenium(url):
     finally:
         driver.quit()
         
-        
+
+def extract_product_rating_from_popover(url):
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument(f"user-agent={USER_AGENT}")
+
+    service = Service()  # assumes chromedriver is in PATH
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    try:
+        driver.get(url)
+
+        try:
+            # Wait for the rating element inside #acrPopover to be present
+            wait = WebDriverWait(driver, 3)
+            rating_span = wait.until(EC.presence_of_element_located((
+                By.CSS_SELECTOR, '#acrPopover span.a-size-base.a-color-base'
+            )))
+
+            rating_value = rating_span.text.strip()
+
+        except TimeoutException:
+            rating_value = "Rating not found"
+
+        return rating_value
+
+    finally:
+        driver.quit()
+
+
+           
 if __name__ == "__main__":
     import csv
 
@@ -126,4 +122,5 @@ if __name__ == "__main__":
             product_info = {}
             product_info['price']   = extract_price_info_selenium(url)
             product_info['Title']  = extract_product_title_selenium(url)
+            product_info['ratings'] = extract_product_rating_from_popover(url)
             print(product_info)

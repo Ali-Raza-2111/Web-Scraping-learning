@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import time
 import os
 import json
@@ -29,3 +30,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
+def main() -> None:
+    print("Hello from day7!")
+

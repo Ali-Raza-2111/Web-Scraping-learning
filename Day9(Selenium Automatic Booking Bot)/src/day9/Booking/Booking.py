@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
+from Booking.Booking_Filtration import BookingFiltration
 class Booking(webdriver.Chrome):
     def __init__(self, driver_path = 'chromedriver.exe',TearDown = False):
         self.driver_path = driver_path
@@ -70,3 +71,9 @@ class Booking(webdriver.Chrome):
     def submit_search(self):
         search_button = self.find_element(By.CSS_SELECTOR,"button[type='submit']")
         search_button.click()
+        
+    def apply_filtrations(self):
+        filtration = BookingFiltration(driver = self)
+        filtration.select_star_checkbox(star_rating = 5)
+        filtration.click_sort_toggle()
+        filtration.click_sort_toggle("Price (lowest first)")

@@ -8,4 +8,5 @@ with Booking(TearDown=False) as bot:
     bot.select_date("2025-07-07","2025-07-15")
     bot.select_adults(3)
     bot.submit_search()
+    bot.apply_filtrations()
     input("Press Enter to exit")

@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
 from Booking.Booking_Filtration import BookingFiltration
+from Booking.Booking_report import BookingReport
 class Booking(webdriver.Chrome):
     def __init__(self, driver_path = 'chromedriver.exe',TearDown = False):
         self.driver_path = driver_path
@@ -76,4 +77,19 @@ class Booking(webdriver.Chrome):
         filtration = BookingFiltration(driver = self)
         filtration.select_star_checkbox(star_rating = 5)
         filtration.click_sort_toggle()
-        filtration.click_sort_toggle("Price (lowest first)")
+        filtration.select_price_sort("Price (lowest first)")
+        
+    def report_result(self):
+        self.implicitly_wait(10)
+        lists = self.find_elements(By.CSS_SELECTOR, "div[role='list']")
+        hotel_boxes = []
+        
+        for list_container in lists:
+            hotel_boxes.extend(list_container.find_elements(By.CSS_SELECTOR, "div[role='listitem']"))
+        
+        
+        report = BookingReport(driver = self)
+        hotel_names = report.Return_Hotels_details(hotel_boxes)
+        report.report_result(hotel_names)
+        
+        

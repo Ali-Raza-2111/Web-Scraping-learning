@@ -9,4 +9,6 @@ with Booking(TearDown=False) as bot:
     bot.select_adults(3)
     bot.submit_search()
     bot.apply_filtrations()
+    bot.report_result()
     input("Press Enter to exit")
+    

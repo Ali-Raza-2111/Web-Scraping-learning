@@ -89,7 +89,8 @@ class Booking(webdriver.Chrome):
         
         
         report = BookingReport(driver = self)
-        hotel_names = report.Return_Hotels_details(hotel_boxes)
-        report.report_result(hotel_names)
+        hotel_data = report.Return_Hotels_details()
+        headers = ["Name", "Price", "Score"]
+        report.display_and_save_to_excel(hotel_data, headers, excel_filename="hotels.xlsx")
         
         

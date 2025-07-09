@@ -1,5 +1,5 @@
 from Booking.Booking import Booking
-
+import prettytable
 
 
 with Booking(TearDown=False) as bot:

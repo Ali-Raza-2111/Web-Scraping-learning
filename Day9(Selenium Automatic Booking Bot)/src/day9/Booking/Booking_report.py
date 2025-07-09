@@ -1,11 +1,11 @@
 from selenium.webdriver.common.by import By
 from prettytable import PrettyTable
-
+from openpyxl import Workbook
 class BookingReport:
     def __init__(self, driver):
         self.driver = driver
         
-    def Return_Hotels_details(self, hotel_boxes):
+    def Return_Hotels_details(self):
         hotels = []
         hotel_cards = self.driver.find_elements(By.CSS_SELECTOR, "div[data-testid='property-card']")
 
@@ -40,15 +40,31 @@ class BookingReport:
 
         return hotels
 
-    def report_result(self, hotels):
+    
+    def display_and_save_to_excel(self, data, headers, excel_filename="output.xlsx"):
+        # Display in console using PrettyTable
         table = PrettyTable()
+        table.field_names = headers
 
-    # Set table columns
-        table.field_names = ["No.", "Hotel Name", "Price", "Score"]
-
-        # Add each hotel as a new row
-        for i, hotel in enumerate(hotels, start=1):
-            table.add_row([i, hotel["name"], hotel["price"], hotel["score"]])
+        for row in data:
+            row_values = [row.get(header.lower(), "N/A") for header in headers]  # matching keys to headers
+            table.add_row(row_values)
 
         print(table)
-        return hotels
+
+        # Write to Excel using openpyxl
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Data"
+
+        # Write headers
+        ws.append(headers)
+
+        # Write data rows
+        for row in data:
+            row_values = [row.get(header.lower(), "N/A") for header in headers]
+            ws.append(row_values)
+
+        wb.save(excel_filename)
+        print(f"\n✅ Data saved to {excel_filename}")
+

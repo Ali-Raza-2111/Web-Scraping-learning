@@ -1,6 +1,4 @@
 from Booking.Booking import Booking
-import prettytable
-
 
 with Booking(TearDown=False) as bot:
     bot.land_first_page()

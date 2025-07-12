@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 from openpyxl.chart import BarChart, Reference
-from openpyxl.chart.series import Series
+from openpyxl.chart.series import series
 
 # Load workbook and 'Report' sheet
 wb = load_workbook('pivot_table.xlsx')

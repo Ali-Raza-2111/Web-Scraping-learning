@@ -7,10 +7,6 @@ from datetime import datetime
 import os
 import sys
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2cd670202ba26f2861e037a853b77aca47e8b02c
 application_path =os.path.dirname(sys.executable)
 
 now = datetime.now()
@@ -46,10 +42,5 @@ pd.DataFrame({
     'Subtitile':Subtitiles,
     'Link':Links
 }).to_csv(final_path,index=False)
-<<<<<<< HEAD
-=======
-
-DRIVER.quit()
->>>>>>> 2cd670202ba26f2861e037a853b77aca47e8b02c
 
 DRIVER.quit()

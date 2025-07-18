@@ -7,13 +7,10 @@ authors = [
     { name = "Ali Raza", email = "aliraza21112005@gmail.com" }
 ]
 requires-python = ">=3.13"
-<<<<<<< HEAD
-dependencies = [
-    "selenium>=4.34.0",
-]
-=======
+
 dependencies = []
->>>>>>> 59bf71c40aba2bc248e0b449225464a249fe4151
+
+
 
 [project.scripts]
 day7 = "day7:main"

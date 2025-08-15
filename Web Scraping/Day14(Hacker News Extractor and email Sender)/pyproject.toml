@@ -1,0 +1,21 @@
+[project]
+name = "day14"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Ali Raza", email = "aliraza21112005@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "bs4>=0.0.2",
+    "requests>=2.32.4",
+    "selenium>=4.34.2",
+]
+
+[project.scripts]
+day14 = "day14:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

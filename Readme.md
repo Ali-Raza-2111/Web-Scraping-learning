@@ -1,2 +1,1 @@
-#This is second Day of learning BeautifulSoup
-I learned BeautifulSoup Library and created a web Scraper which scraps the data from a real Website i create it that it scraps the data related to jobs 
+I have learned and completed my WebScraping and got a little idea of data Science

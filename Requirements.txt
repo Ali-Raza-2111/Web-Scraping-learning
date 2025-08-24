@@ -1,0 +1,9 @@
+autogen-agentchat
+autogen-agentchat[gemini]
+python-dotenv
+autogen-core
+autogen
+autogen_ext
+openai
+
+
